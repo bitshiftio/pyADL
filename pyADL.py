@@ -12,25 +12,27 @@
 ** 
 ** AMDOverdriveCtrl Author: Thorsten Gilling (tgilling@web.de)
 ** 
-** pyADL.cpp
+** pyADL.py
 ** This is just a simple python extended library for AMD ADL
 ** Author: netxshare - http://www.bitshift.io
 ** 
 ** 1CWddfhXagPoWgzUCs7oVHFjwBmqbAoJRr
 ** -------------------------------------------------------------------------*/
 '''
-import pyADL
+import ADL
 
-pyADL.SetupADL(0)
-print pyADL.getTemp()
-print pyADL.getFanSpeed()
-print pyADL.getFanRPM()
-print pyADL.getCoreClockSpeed()
-print pyADL.getMemoryClockSpeed()
-print pyADL.getVoltage()
-pyADL.setFanSpeed(75)
-#pyADL.setCoreClockSpeed(2,900)
-pyADL.SetupADL(5) # Switch to Second GPU on 6990
-#pyADL.setCoreClockSpeed(2,900)
-print pyADL.getTemp()
-#pyADL.setMemoryClockSpeed(2,1000)
+ADL.SetupADL(0)
+print ADL.getGPULoad()
+print ADL.getTemp()
+print ADL.getFanSpeed()
+print ADL.getFanRPM()
+print ADL.getCoreClockSpeed()
+print ADL.getMemoryClockSpeed()
+print ADL.getVoltage()
+ADL.setFanSpeed(75)
+#ADL.setCoreClockSpeed(2,900)
+ADL.SetupADL(5) # Switch to Second GPU on 6990
+#ADL.setCoreClockSpeed(2,900)
+print ADL.getTemp()
+print ADL.getGPULoad()
+#ADL.setMemoryClockSpeed(2,1000)

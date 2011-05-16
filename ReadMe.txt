@@ -27,15 +27,16 @@ Put the ADL SDK in ./ADL_SDK
 
 Functions
 
-pyADL.SetupADL(DeviceIndex) - This sets the GPU you wish to use.
-pyADL.getTemp() - Returns the GPU Temp.
-pyADL.getFanSpeed() - Returns the fan speed percent.
-pyADL.getFanRPM() - Returns the fan RPMs.
-pyADL.getCoreClockSpeed() - Returns Current Core Clock Speed.
-pyADL.getMemoryClockSpeed() - Returns Current Memory Clock Speed.
-pyADL.getVoltage() - Returns Current Voltage.
+ADL.SetupADL(DeviceIndex) - This sets the GPU you wish to use.
+ADL.getTemp() - Returns the GPU Temp.
+ADL.getGPULoad() - Returns the current gpu load percent.
+ADL.getFanSpeed() - Returns the fan speed percent.
+ADL.getFanRPM() - Returns the fan RPMs.
+ADL.getCoreClockSpeed() - Returns Current Core Clock Speed.
+ADL.getMemoryClockSpeed() - Returns Current Memory Clock Speed.
+ADL.getVoltage() - Returns Current Voltage.
 
-pyADL.setFanSpeed(Precent) - Sets The Fan Speed.
-pyADL.setCoreClockSpeed(Level,Speed) - Sets Core Clock Speed. Level(0,1,2)
-pyADL.setMemoryClockSpeed(Level,Speed) - Sets Memory Clock SPeed. Level(0,1,2)
-pyADL.setVoltage(Level, Voltage) - Sets Voltage. Level(0,1,2)
+ADL.setFanSpeed(Precent) - Sets The Fan Speed.
+ADL.setCoreClockSpeed(Level,Speed) - Sets Core Clock Speed. Level(0,1,2)
+ADL.setMemoryClockSpeed(Level,Speed) - Sets Memory Clock Speed. Level(0,1,2)
+ADL.setVoltage(Level, Voltage) - Sets Voltage. Level(0,1,2)

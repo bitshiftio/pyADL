@@ -24,7 +24,6 @@
 
 ADL* adl;
 long int GpuIndex = 0;
-static int MissingFeatures = 0;
 
 static PyObject *SetupADL(PyObject *self, PyObject *args)
 {
@@ -48,6 +47,16 @@ static PyObject *SetupADL(PyObject *self, PyObject *args)
 
 }
 
+static PyObject *getGPULoad(PyObject *self, PyObject *noarg)
+{
+	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_ACTIVITY)
+	{
+		return Py_BuildValue("i", adl->mODActivity.iActivityPercent);
+	}
+	else
+		return Py_BuildValue("s", "getGPULoad() Failed.");
+
+}
 
 static PyObject *getTemp(PyObject *self, PyObject *noarg)
 {
@@ -57,7 +66,6 @@ static PyObject *getTemp(PyObject *self, PyObject *noarg)
 	}
 	else
 		return Py_BuildValue("s", "getTemp() Failed.");
-
 }
 
 static PyObject *getFanSpeed(PyObject *self, PyObject *noarg)
@@ -283,7 +291,8 @@ static PyObject *setVoltage(PyObject *self, PyObject *args)
 
 static PyMethodDef ADL_Methods[] = {
 	
-	{"SetupADL", SetupADL, METH_VARARGS, "Initialize ADL"},
+	{"SetupADL", SetupADL, METH_VARARGS, "Initialize ADL."},
+	{"getGPULoad", getGPULoad, METH_NOARGS, "Returns Current GPU Load."},
 	{"getTemp",  getTemp, METH_NOARGS, "Returns GPU Temperature."},
 	{"getFanSpeed", getFanSpeed, METH_NOARGS, "Returns Fan Speed."},
 	{"getFanRPM", getFanRPM, METH_NOARGS, "Returns Current Fan RPM."},
@@ -298,12 +307,12 @@ static PyMethodDef ADL_Methods[] = {
 };
 
 
-PyMODINIT_FUNC initpyADL(void)
+PyMODINIT_FUNC initADL(void)
 {
 	
 	PyObject *m;
 
-	m = Py_InitModule("pyADL", ADL_Methods);
+	m = Py_InitModule("ADL", ADL_Methods);
 	if (m == NULL)
 		return;
 

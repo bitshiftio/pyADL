@@ -1,4 +1,4 @@
-/* ---------------------------------------------------------------------------
+﻿/* ---------------------------------------------------------------------------
 ** This software is in the public domain, furnished "as is", without technical
 ** support, and with no warranty, express or implied, as to its usefulness for
 ** any purpose.
@@ -21,8 +21,10 @@
 
 I accept NO responsibility for any damage that may or may not be caused to your system by attempting an overclock, and this will also possibly void a manufacturer's warranty. Do this at your OWN RISK.
 
-
 ADL SDK - http://developer.amd.com/Downloads/ADL_SDK_3.0.zip
+
+Put the ADL SDK in ./ADL_SDK
+
 Functions
 
 pyADL.SetupADL(DeviceIndex) - This sets the GPU you wish to use.

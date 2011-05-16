@@ -1,4 +1,4 @@
-/*******************************************************************************
+﻿/*******************************************************************************
 
  * This program reads HW information from your ATI Radeon card and displays them
  * You can also change frequencies and voltages.
@@ -38,7 +38,7 @@
  #include <tchar.h>
 #endif
 
-#include "..\include\adl_sdk.h"
+#include "adl_sdk.h"
 
 // Definitions of the used function pointers. Add more if you use other ADL APIs
 

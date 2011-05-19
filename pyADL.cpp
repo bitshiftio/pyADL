@@ -31,7 +31,7 @@ static PyObject *SetupADL(PyObject *self, PyObject *args)
 	
 	 
 
-	if(! PyArg_ParseTuple(args, "i", &GpuIndex))
+	if(!PyArg_ParseTuple(args, "i", &GpuIndex))
 		return NULL;
 
 	if (adl == NULL)
@@ -49,89 +49,129 @@ static PyObject *SetupADL(PyObject *self, PyObject *args)
 
 static PyObject *getGPULoad(PyObject *self, PyObject *noarg)
 {
+	
+	PyObject *Results;
+
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_ACTIVITY)
 	{
-		return Py_BuildValue("i", adl->mODActivity.iActivityPercent);
+		Results = Py_BuildValue("i", adl->mODActivity.iActivityPercent);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getGPULoad() Failed.");
-
+	{
+		Results = Py_BuildValue("s", "getGPULoad() Failed.");
+		return Results;
+	}
 }
 
 static PyObject *getTemp(PyObject *self, PyObject *noarg)
 {
+	PyObject *Results;
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_TEMPERATURE)
 	{
-		return Py_BuildValue("f", (float)adl->mTemperature.iTemperature/1000.0);
+		 Results = Py_BuildValue("f", (float)adl->mTemperature.iTemperature/1000.0);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getTemp() Failed.");
+	{
+
+		Results =  Py_BuildValue("s", "getTemp() Failed.");
+	}
+
 }
 
 static PyObject *getFanSpeed(PyObject *self, PyObject *noarg)
 {
-
+	PyObject *Results;
 	if ((adl->GetSupportedFeatures() & ADL::FEAT_GET_FANSPEED_INFO) && (adl->GetSupportedFeatures() & ADL::FEAT_GET_FANSPEED))
 	{
-		return Py_BuildValue("i", adl->mCurrentFanSpeed.iFanSpeed * 100 / adl->mFanSpeedInfo.iMaxRPM);
+		Results = Py_BuildValue("i", adl->mCurrentFanSpeed.iFanSpeed * 100 / adl->mFanSpeedInfo.iMaxRPM);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getFanSpeed() Failed.");
+	{
+
+		Results = Py_BuildValue("s", "getFanSpeed() Failed.");
+		return Results;
+	}
 
 }
 
 static PyObject *getFanRPM(PyObject *self, PyObject *noarg)
 {
+	PyObject *Results;
 
 	if ((adl->GetSupportedFeatures() & ADL::FEAT_GET_FANSPEED_INFO) && (adl->GetSupportedFeatures() & ADL::FEAT_GET_FANSPEED))
 	{
-		return Py_BuildValue("i", adl->mCurrentFanSpeed.iFanSpeed);
+		Results = Py_BuildValue("i", adl->mCurrentFanSpeed.iFanSpeed);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getFanRPM() Failed.");
+	{
+
+		Results = Py_BuildValue("s", "getFanRPM() Failed.");
+		return Results;
+	}
+
 }
 
 static PyObject *getCoreClockSpeed(PyObject *self, PyObject *noarg)
 {
 	
-		
+	PyObject *Results;
+
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PARAMETERS)
 	{
-		return Py_BuildValue("i", adl->mpODPerformanceLevels->aLevels[adl->mODActivity.iCurrentPerformanceLevel].iEngineClock/100);
+		Results =  Py_BuildValue("i", adl->mpODPerformanceLevels->aLevels[adl->mODActivity.iCurrentPerformanceLevel].iEngineClock/100);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getCoreClockSpeed() Failed.");
+	{
+
+		Results = Py_BuildValue("s", "getCoreClockSpeed() Failed.");
+		return Results;
+	}
 }
 
 static PyObject *getMemoryClockSpeed(PyObject *self, PyObject *noarg)
 {
 
+	PyObject *Results;
 
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PARAMETERS)
 	{
-		return Py_BuildValue("i", adl->mpODPerformanceLevels->aLevels[adl->mODActivity.iCurrentPerformanceLevel].iMemoryClock/100);
+		Results = Py_BuildValue("i", adl->mpODPerformanceLevels->aLevels[adl->mODActivity.iCurrentPerformanceLevel].iMemoryClock/100);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getMemoryClockSpeed() Failed.");
+	{
+		Results = Py_BuildValue("s", "getMemoryClockSpeed() Failed.");
+		return Results;
+	}
 }
 
 static PyObject *getVoltage(PyObject *self, PyObject *noarg)
 {
 
-
+	PyObject *Results;
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PARAMETERS)
 	{
-		return Py_BuildValue("f", (float)adl->mpODPerformanceLevels->aLevels[adl->mODActivity.iCurrentPerformanceLevel].iVddc/1000.0);
+		Results = Py_BuildValue("f", (float)adl->mpODPerformanceLevels->aLevels[adl->mODActivity.iCurrentPerformanceLevel].iVddc/1000.0);
+		return Results;
 	}
 	else
-		return Py_BuildValue("s", "getVoltage() Failed.");
+	{
+		Results = Py_BuildValue("s", "getVoltage() Failed.");
+		return Results;
+	}
+
 }
 
 static PyObject *setFanSpeed(PyObject *self, PyObject *args)
 {
 	int percent;
 
-	if(! PyArg_ParseTuple(args, "i", &percent))
+	if(!PyArg_ParseTuple(args, "i", &percent))
 		return NULL;
 
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_FANSPEED)
@@ -165,7 +205,7 @@ static PyObject *setCoreClockSpeed(PyObject *self, PyObject *args)
 {
 	int Level,CoreSpeed;
 	
-	if(! PyArg_ParseTuple(args, "ii", &Level, &CoreSpeed))
+	if(!PyArg_ParseTuple(args, "ii", &Level, &CoreSpeed))
 		return NULL;
 
 	if((adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PARAMETERS) && (adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PERF_LEVELS))
@@ -207,7 +247,7 @@ static PyObject *setMemoryClockSpeed(PyObject *self, PyObject *args)
 {
 	int Level,CoreSpeed;
 
-	if(! PyArg_ParseTuple(args, "ii", &Level, &CoreSpeed))
+	if(!PyArg_ParseTuple(args, "ii", &Level, &CoreSpeed))
 		return NULL;
 
 	if((adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PARAMETERS) && (adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PERF_LEVELS))
@@ -249,7 +289,7 @@ static PyObject *setVoltage(PyObject *self, PyObject *args)
 {
 	int Level,Voltage;
 
-	if(! PyArg_ParseTuple(args, "ii", &Level, &Voltage))
+	if(!PyArg_ParseTuple(args, "ii", &Level, &Voltage))
 		return NULL;
 
 	if((adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PARAMETERS) && (adl->GetSupportedFeatures() & ADL::FEAT_GET_OD_PERF_LEVELS))

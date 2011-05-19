@@ -42,7 +42,7 @@ static PyObject *SetupADL(PyObject *self, PyObject *args)
 	
 	adl->SetGPUIndex(&GpuIndex);
 
-	
+	Py_INCREF(Py_None);
 	return Py_None;
 
 }

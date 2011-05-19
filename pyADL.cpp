@@ -69,13 +69,14 @@ static PyObject *getTemp(PyObject *self, PyObject *noarg)
 	PyObject *Results;
 	if (adl->GetSupportedFeatures() & ADL::FEAT_GET_TEMPERATURE)
 	{
-		 Results = Py_BuildValue("f", (float)adl->mTemperature.iTemperature/1000.0);
+		Results = Py_BuildValue("f", (float)adl->mTemperature.iTemperature/1000.0);
 		return Results;
 	}
 	else
 	{
 
 		Results =  Py_BuildValue("s", "getTemp() Failed.");
+		return Results;
 	}
 
 }
@@ -185,16 +186,19 @@ static PyObject *setFanSpeed(PyObject *self, PyObject *args)
 
 		if(SAVE_CALL(adl->ADL_Overdrive5_FanSpeed_Set)(adl->GetGPUIndex(), 0, &speed_value) != ADL_OK)
 		{
+			Py_INCREF(Py_False);
 			return Py_False;
 		}
 		else
 		{
 			ACT_LOG("Fan speed set to " << percent << "%");
+			Py_INCREF(Py_True);
 			return Py_True;
 		}
 
 	}
 
+	Py_INCREF(Py_False);
 	return Py_False;
 
 		
@@ -230,16 +234,20 @@ static PyObject *setCoreClockSpeed(PyObject *self, PyObject *args)
 
 			if(SAVE_CALL(adl->ADL_Overdrive5_ODPerformanceLevels_Set)(adl->GetGPUIndex(), levels) != ADL_OK)
 			{
+				Py_INCREF(Py_False);
 				return Py_False;
 			}
 
 			free(levels);
 			levels = NULL;
 
+			Py_INCREF(Py_True);
 			return Py_True;
 		}
+		Py_INCREF(Py_False);
 		return Py_False;
 	}
+	Py_INCREF(Py_False);
 	return Py_False;
 }
 
@@ -272,16 +280,20 @@ static PyObject *setMemoryClockSpeed(PyObject *self, PyObject *args)
 
 			if(SAVE_CALL(adl->ADL_Overdrive5_ODPerformanceLevels_Set)(adl->GetGPUIndex(), levels) != ADL_OK)
 			{
+				Py_INCREF(Py_False);
 				return Py_False;
 			}
 
 			free(levels);
 			levels = NULL;
 
+			Py_INCREF(Py_True);
 			return Py_True;
 		}
+		Py_INCREF(Py_False);
 		return Py_False;
 	}
+	Py_INCREF(Py_False);
 	return Py_False;
 }
 
@@ -314,16 +326,20 @@ static PyObject *setVoltage(PyObject *self, PyObject *args)
 
 			if(SAVE_CALL(adl->ADL_Overdrive5_ODPerformanceLevels_Set)(adl->GetGPUIndex(), levels) != ADL_OK)
 			{
+				Py_INCREF(Py_False);
 				return Py_False;
 			}
 
 			free(levels);
 			levels = NULL;
 
+			Py_INCREF(Py_True);
 			return Py_True;
 		}
+		Py_INCREF(Py_False);
 		return Py_False;
 	}
+	Py_INCREF(Py_False);
 	return Py_False;
 }
 

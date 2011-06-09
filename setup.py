@@ -7,7 +7,7 @@ else:
 	extra_compile_args = None
 
 setup (name = 'adl',
-       version = '0.02',
+       version = '0.03',
        description = 'Python AMD ADL Wrapper',
        author = 'netxshare',
        url = 'http://www.bitshift.io/pyADL/',

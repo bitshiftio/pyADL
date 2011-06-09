@@ -25,7 +25,7 @@
 ADL* adl;
 long int GpuIndex = 0;
 
-static PyObject *SetupADL(PyObject *self, PyObject *args)
+static PyObject *setIndex(PyObject *self, PyObject *args)
 {
 	adl = ADL::Instance();
 	
@@ -45,6 +45,22 @@ static PyObject *SetupADL(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 
+}
+
+
+static PyObject *getNumGPU(PyObject *self, PyObject *noarg)
+{
+
+	
+	adl = ADL::Instance();
+
+	PyObject *list = PyList_New(adl->TotalActive);
+	
+	for (int i = 0; i < adl->TotalActive; ++i){
+		PyList_SetItem(list, i, Py_BuildValue("{s:i,s:s}", "GPU",adl->numGPU[i][0],"Name",adl->GPUName[i]));
+	}
+
+	return list;
 }
 
 static PyObject *getGPULoad(PyObject *self, PyObject *noarg)
@@ -347,7 +363,8 @@ static PyObject *setVoltage(PyObject *self, PyObject *args)
 
 static PyMethodDef ADL_Methods[] = {
 	
-	{"SetupADL", SetupADL, METH_VARARGS, "Initialize ADL."},
+	{"setIndex", setIndex, METH_VARARGS, "Initialize ADL."},
+	{"getNumGPU", getNumGPU, METH_NOARGS, "Returns a list of active GPUS"},
 	{"getGPULoad", getGPULoad, METH_NOARGS, "Returns Current GPU Load."},
 	{"getTemp",  getTemp, METH_NOARGS, "Returns GPU Temperature."},
 	{"getFanSpeed", getFanSpeed, METH_NOARGS, "Returns Fan Speed."},

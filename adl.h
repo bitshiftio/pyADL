@@ -262,6 +262,11 @@ class ADL
 	int GetGPUIndex() { return ms_instance->mGPUIndex; }
 
 	int mNrOfAdapters;
+	int numGPU[8][3];
+	char* GPUName[8];
+	int TotalActive;
+
+
 	LPAdapterInfo mpAdapterInfo;
 	ADLTemperature mTemperature;
 	ADLFanSpeedInfo mFanSpeedInfo;

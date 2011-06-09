@@ -44,6 +44,9 @@
 
 // ------------------------------------------------------------------------------------------------------------
 
+// ADL UNDOCUMENTED
+//typedef int (*ADL_Adapter_GPUSlave_Get)(int adapterIndex, int *numGPUSlave, out IntPtr gpuSlaves);
+
 // ADL Main
 typedef int ( *ADL_MAIN_CONTROL_CREATE ) (ADL_MAIN_MALLOC_CALLBACK callback, int iEnumConnectedAdapters);
 typedef int ( *ADL_MAIN_CONTROL_REFRESH ) ();

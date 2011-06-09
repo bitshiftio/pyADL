@@ -509,6 +509,19 @@ bool ADL::Init()
 #ifndef FAKE_ATI_CARD
     // Initialize ADL. The second parameter is 1, which means:
     // retrieve adapter information only for adapters that are physically present and enabled in the system
+
+
+	for (int i = 0; i < 8; ++i){
+		numGPU[i][0] = -1;
+		numGPU[i][1] = -1;
+		numGPU[i][2] = -1;
+		numGPU[i][3] = -1;
+		GPUName[i] = new char[256];
+		memset(&GPUName[i], 0, sizeof(GPUName[i]));
+
+	}
+
+	TotalActive = 0;
     if (ADL_OK != ADL_Main_Control_Create (sADL_Main_Memory_Alloc, 1))
     {
         return false;
@@ -522,7 +535,7 @@ bool ADL::Init()
 	    mpAdapterInfo = (LPAdapterInfo) malloc (sizeof(AdapterInfo) * mNrOfAdapters);
 	    if (mpAdapterInfo != NULL)
 	    {
-		memset (mpAdapterInfo, '\0', sizeof(AdapterInfo) * mNrOfAdapters);
+			memset (mpAdapterInfo, '\0', sizeof(AdapterInfo) * mNrOfAdapters);
 	        if (ADL_Adapter_AdapterInfo_Get (mpAdapterInfo, sizeof (AdapterInfo) * mNrOfAdapters) != ADL_OK)
 		{
 		    ERR_LOG("ERROR: no adapter info available!");
@@ -532,12 +545,38 @@ bool ADL::Init()
 		{
 		    int status;
 		    SAVE_CALL(ADL_Adapter_Active_Get)(i, &status);
-
+	
 		    int id;
 		    SAVE_CALL(ADL_Adapter_ID_Get)(i, &id);
+			
+			INF_LOG("Adapter index: " << mpAdapterInfo[i].iAdapterIndex << (status == ADL_TRUE ? ", active" : ", inact.") <<
+			", ID:" << id << ", " << mpAdapterInfo[i].strAdapterName << ", BusNum:" << mpAdapterInfo[i].iBusNumber << ", DevNum:" << mpAdapterInfo[i].iDeviceNumber << ", VendorID:" << mpAdapterInfo[i].iVendorID);
+			bool Dupe = false;
 
-		    INF_LOG("Adapter index: " << mpAdapterInfo[i].iAdapterIndex << (status == ADL_TRUE ? ", active" : ", inact.") <<
-			", ID:" << id << ", " << mpAdapterInfo[i].strAdapterName);
+			for(int j=0; j < 8; j++)
+			{
+				if(numGPU[j][3] == id)
+				{
+					Dupe = true;
+					break;
+				}
+			}
+			
+			if(Dupe == false)
+			{
+				numGPU[TotalActive][0] = mpAdapterInfo[i].iAdapterIndex;
+				numGPU[TotalActive][1] = mpAdapterInfo[i].iBusNumber;
+				numGPU[TotalActive][2] = mpAdapterInfo[i].iDeviceNumber;
+				numGPU[TotalActive][3] = id;
+				GPUName[TotalActive] = mpAdapterInfo[i].strAdapterName;
+
+				TotalActive++;
+			}
+
+
+			
+
+		    
 		}
 
 
